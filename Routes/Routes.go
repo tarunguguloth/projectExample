@@ -9,21 +9,19 @@ import (
 func SetupRouter() *gin.Engine {
 	r := gin.Default()
 
-	pay := r.Group("/Payments")
+	payments := r.Group("/payments")
 	{
-		pay.POST(":id/addAmount", Controller.AddAmount)
-		pay.POST(":id/withdrawAmount", Controller.WithdrawAmount)
-		//will use callback according to time constraint
-		//pay.GET("payments/:id/update", Controller.Callback)
+		payments.POST(":Userid/addAmount", Controller.AddAmount)
+		payments.POST(":Userid/withdrawAmount", Controller.WithdrawAmount)
+        payments.GET(":payment_status", Controller.Callback)
 	}
-	return r
 
-	rep := r.Group("/Reports")
+	reports := r.Group("/reports")
 	{
-		rep.GET("pending_orders/:id", Controller.DailyPendingOrders)
-		rep.GET("holdings/:id?{:From},{:To}", Controller.Portfolio)
-		rep.GET("order_histroy/:id?{:From},{:To}", Controller.OrdersHistory)
-		rep.GET("order_histroy/:id/profit_loss_history?{:From},{:To}", Controller.ProfitLossHistory)
+		reports.GET("pending_orders/:Userid", Controller.DailyPendingOrders)
+		reports.GET("holdings/:Userid", Controller.Portfolio)
+		reports.GET("order_history/:Userid", Controller.OrdersHistory)
+		reports.GET("profit_loss_history/:Userid?", Controller.ProfitLossHistory)
 	}
 	return r
 }

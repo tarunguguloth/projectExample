@@ -8,8 +8,8 @@ import (
 )
 
 func AddAmount(c *gin.Context){
-	var addReq Model.PaymentsRequest
-	id := c.Params.ByName("id")
+	var addReq Model.AddRequest
+	id := c.Params.ByName("Userid")
 	c.BindJSON(&addReq)
 	addRes, err := Model.AddAmount(addReq,id)
 	if err != nil {
@@ -20,8 +20,8 @@ func AddAmount(c *gin.Context){
 	}
 }
 func WithdrawAmount(c *gin.Context){
-	var withdrawReq Model.PaymentsResponse
-	id := c.Params.ByName("id")
+	var withdrawReq Model.WithdrawRequest
+	id := c.Params.ByName("Userid")
 	c.BindJSON(&withdrawReq)
 	withdrawRes, err := Model.WithdrawAmount(withdrawReq,id)
 	if err != nil {
@@ -29,6 +29,16 @@ func WithdrawAmount(c *gin.Context){
 		c.AbortWithStatus(http.StatusNotFound)
 	} else {
 		c.JSON(http.StatusOK, withdrawRes)
+	}
+}
+
+func Callback(c *gin.Context){
+	callBackResponse, err := Model.Callback()
+	if err != nil {
+		fmt.Println(err.Error())
+		c.AbortWithStatus(http.StatusNotFound)
+	} else {
+		c.JSON(http.StatusOK, callBackResponse)
 	}
 }
 

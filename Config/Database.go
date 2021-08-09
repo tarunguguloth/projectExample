@@ -1,8 +1,8 @@
 package Config
 
 import (
-"fmt"
-"github.com/jinzhu/gorm"
+	"fmt"
+	"github.com/jinzhu/gorm"
 )
 
 var DB *gorm.DB
